@@ -1,0 +1,2 @@
+## Renombra este archivo a "local.properties" y ajusta la ruta a tu SDK si Android Studio no lo detecta solo.
+# sdk.dir=/Users/tu_usuario/Library/Android/sdk

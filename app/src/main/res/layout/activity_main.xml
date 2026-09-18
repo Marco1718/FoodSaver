@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app">
+
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:background="@drawable/bg_header_gradient"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvSectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FoodSaver"
+                    android:textColor="@color/white"
+                    android:fontFamily="serif"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvGreeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/white"
+                    android:alpha="0.8"
+                    android:textStyle="italic"
+                    android:textSize="11sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_pill_outline_white"
+                android:paddingHorizontal="13dp"
+                android:paddingVertical="6dp"
+                android:text="Salir"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/statsRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginEnd="5dp" android:orientation="vertical" android:background="@drawable/bg_stat_chip" android:padding="9dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Alimentos" android:textColor="@color/white" android:alpha="0.85" android:textSize="10sp" />
+                <TextView android:id="@+id/tvStatAlimentos" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/white" android:fontFamily="serif" android:textStyle="bold" android:textSize="22sp" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/chipUrgentes" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginHorizontal="5dp" android:orientation="vertical" android:background="@drawable/bg_stat_chip" android:padding="9dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Urgentes" android:textColor="@color/white" android:alpha="0.85" android:textSize="10sp" />
+                <TextView android:id="@+id/tvStatUrgentes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/white" android:fontFamily="serif" android:textStyle="bold" android:textSize="22sp" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="5dp" android:orientation="vertical" android:background="@drawable/bg_stat_chip" android:padding="9dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Usuarios" android:textColor="@color/white" android:alpha="0.85" android:textSize="10sp" />
+                <TextView android:id="@+id/tvStatUsuarios" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/white" android:fontFamily="serif" android:textStyle="bold" android:textSize="22sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:layout_above="@id/bottomNav"
+        android:clipToPadding="false"
+        android:paddingHorizontal="15dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp" />
+
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/card_white"
+        android:elevation="12dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="6dp">
+
+        <include android:id="@+id/navInicio" layout="@layout/item_nav" />
+        <include android:id="@+id/navAgregar" layout="@layout/item_nav" />
+        <include android:id="@+id/navDespensa" layout="@layout/item_nav" />
+        <include android:id="@+id/navUrgentes" layout="@layout/item_nav" />
+        <include android:id="@+id/navRecetas" layout="@layout/item_nav" />
+        <!-- Pestaña "Usuarios" oculta a petición: el fragment, el DAO, la
+             entidad Room y la Database siguen intactos en el proyecto,
+             solo se quitó el acceso desde el nav inferior. -->
+    </LinearLayout>
+
+</RelativeLayout>

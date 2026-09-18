@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_app">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_header_gradient"
+        android:padding="24dp"
+        android:paddingTop="54dp">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pill_outline_white"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="6dp"
+            android:text="← Volver"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crear cuenta"
+            android:textColor="@color/white"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Únete a FoodSaver"
+            android:textColor="@color/white"
+            android:alpha="0.8"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView style="@style/FieldLabel" android:text="Nombre completo" />
+            <EditText android:id="@+id/etNombre" style="@style/FieldInput" android:hint="Ej. María García" android:layout_marginBottom="15dp" />
+
+            <TextView style="@style/FieldLabel" android:text="Correo electrónico" />
+            <EditText android:id="@+id/etEmail" style="@style/FieldInput" android:hint="correo@ejemplo.com" android:inputType="textEmailAddress" android:layout_marginBottom="15dp" />
+
+            <TextView style="@style/FieldLabel" android:text="Contraseña" />
+            <EditText android:id="@+id/etPassword" style="@style/FieldInput" android:hint="Mínimo 6 caracteres" android:inputType="textPassword" android:layout_marginBottom="15dp" />
+
+            <TextView style="@style/FieldLabel" android:text="Confirmar contraseña" />
+            <EditText android:id="@+id/etConfirmar" style="@style/FieldInput" android:hint="Repite tu contraseña" android:inputType="textPassword" android:layout_marginBottom="15dp" />
+
+            <TextView
+                android:id="@+id/tvError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_error_banner"
+                android:padding="12dp"
+                android:textColor="@color/error_text"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnRegistrar"
+                style="@style/GreenButton"
+                android:text="Crear cuenta" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

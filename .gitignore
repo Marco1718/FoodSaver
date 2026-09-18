@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+*/build/
+*/*/build/
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+.DS_Store
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Local config (nunca se sube: contiene rutas de tu máquina)
+local.properties
+
+# Logs
+*.log
+
+# Signing
+*.jks
+*.keystore
