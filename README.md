@@ -30,12 +30,6 @@ cd FoodSaver
 ./gradlew assembleDebug
 ```
 
-La primera vez que abras el proyecto, Android Studio puede pedirte:
-
-- **Seleccionar el Gradle JDK** → usa la opción **"Use JVM 21"** que te ofrece.
-- **Regenerar el wrapper de Gradle** → acéptalo (falta el binario
-  `gradle-wrapper.jar`, se genera solo con tu Gradle local).
-
 ## Estructura del proyecto
 
 | Carpeta | Contenido |
@@ -47,19 +41,3 @@ La primera vez que abras el proyecto, Android Studio puede pedirte:
 | `app/src/main/res/drawable/` | Fondos redondeados, botones, badges, degradados |
 | `app/src/main/res/values/` | Colores, estilos y tema |
 
-## Stack técnico
-
-| | |
-|---|---|
-| Lenguaje | Kotlin |
-| Persistencia | Room (`androidx.room`) |
-| Concurrencia | Corrutinas (`lifecycleScope`, `Flow`) |
-| UI | Vistas XML + Material Components |
-| Build | Gradle (Kotlin DSL), AGP 8.5.2, Gradle 8.7 |
-| minSdk / targetSdk | 24 / 34 |
-
-## Personalizar el package id
-
-Si más adelante quieres publicarla con tu propio dominio, cambia
-`com.foodsaver` en `app/build.gradle.kts` (`namespace` y `applicationId`) y
-mueve/renombra la carpeta `app/src/main/java/com/foodsaver` igual.
