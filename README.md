@@ -7,19 +7,6 @@ usuarios en una base de datos local con **Room**.
 Proyecto Gradle único (no está dividido en actividades/ramas): se abre
 directo en Android Studio desde la raíz de esta carpeta.
 
-## Requisitos que cumple (Room)
-
-| Requisito | Archivo |
-|---|---|
-| **Entidad (Model)** `User` — `id` autoincrementable, `nombre`, `apellidos`, `direccion`, `telefono` | `app/src/main/java/com/foodsaver/data/User.kt` |
-| **DAO** — insertar y consultas | `app/src/main/java/com/foodsaver/data/UserDao.kt` |
-| **Database Class** — `RoomDatabase` + patrón Singleton | `app/src/main/java/com/foodsaver/data/AppDatabase.kt` |
-| **UI** — formulario con `TextInputLayout` / `TextInputEditText` + botón guardar | `app/src/main/res/layout/fragment_usuarios.xml` |
-| **Controlador** — valida campos vacíos + inserta en segundo plano con `lifecycleScope` | `app/src/main/java/com/foodsaver/ui/UsuariosFragment.kt` |
-
-> Nota: la pestaña "Usuarios" está oculta del menú inferior por ahora, pero
-> el código de arriba sigue completo y funcional dentro del proyecto.
-
 ## Cómo abrir el proyecto
 
 En Android Studio: **File → Open** y selecciona la carpeta `FoodSaver` (la
@@ -29,12 +16,6 @@ raíz de este repositorio, no una subcarpeta).
 cd FoodSaver
 ./gradlew assembleDebug
 ```
-
-La primera vez que abras el proyecto, Android Studio puede pedirte:
-
-- **Seleccionar el Gradle JDK** → usa la opción **"Use JVM 21"** que te ofrece.
-- **Regenerar el wrapper de Gradle** → acéptalo (falta el binario
-  `gradle-wrapper.jar`, se genera solo con tu Gradle local).
 
 ## Estructura del proyecto
 
@@ -47,19 +28,6 @@ La primera vez que abras el proyecto, Android Studio puede pedirte:
 | `app/src/main/res/drawable/` | Fondos redondeados, botones, badges, degradados |
 | `app/src/main/res/values/` | Colores, estilos y tema |
 
-## Stack técnico
+> Nota: existe una pestaña "Usuarios" en la cual se pueden registrar más usuarios
+> ésta está oculta del menú inferior por ahora, pero el código sigue completo y funcional dentro del proyecto.
 
-| | |
-|---|---|
-| Lenguaje | Kotlin |
-| Persistencia | Room (`androidx.room`) |
-| Concurrencia | Corrutinas (`lifecycleScope`, `Flow`) |
-| UI | Vistas XML + Material Components |
-| Build | Gradle (Kotlin DSL), AGP 8.5.2, Gradle 8.7 |
-| minSdk / targetSdk | 24 / 34 |
-
-## Personalizar el package id
-
-Si más adelante quieres publicarla con tu propio dominio, cambia
-`com.foodsaver` en `app/build.gradle.kts` (`namespace` y `applicationId`) y
-mueve/renombra la carpeta `app/src/main/java/com/foodsaver` igual.
