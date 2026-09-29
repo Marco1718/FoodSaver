@@ -35,6 +35,13 @@
                 android:orientation="vertical">
                 <TextView style="@style/FieldLabel" android:text="Cantidad" />
                 <EditText android:id="@+id/etCantidad" style="@style/FieldInput" android:hint="2" android:inputType="number" />
+                <TextView
+                    android:id="@+id/tvLimiteCantidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/text_muted"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -45,6 +52,13 @@
                 android:orientation="vertical">
                 <TextView style="@style/FieldLabel" android:text="Días para caducar" />
                 <EditText android:id="@+id/etDias" style="@style/FieldInput" android:hint="5" android:inputType="number" />
+                <TextView
+                    android:id="@+id/tvLimiteDias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/text_muted"
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
 

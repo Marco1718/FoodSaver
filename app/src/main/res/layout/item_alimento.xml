@@ -69,6 +69,21 @@
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/btnEditar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="7dp"
+            android:background="@drawable/bg_badge"
+            android:backgroundTint="@color/badge_soon_bg"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="✎ Editar"
+            android:textColor="@color/badge_soon_text"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/btnComido"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -88,7 +103,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="7dp"
             android:background="@drawable/bg_badge"
             android:backgroundTint="@color/badge_urgent_bg"
             android:gravity="center"

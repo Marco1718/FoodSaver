@@ -11,10 +11,11 @@ import androidx.room.RoomDatabase
  * instancia de la base de datos durante todo el ciclo de vida de la app,
  * evitando abrir varias conexiones a la vez.
  */
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [User::class, Alimento::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun alimentoDao(): AlimentoDao
 
     companion object {
         // @Volatile garantiza que los cambios sobre INSTANCE sean visibles
@@ -31,7 +32,13 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "foodsaver_database"
-                ).build()
+                )
+                    // Se agregó la tabla "alimentos" (versión 2). No hay datos
+                    // productivos que migrar, así que en vez de escribir un
+                    // Migration a mano, dejamos que Room recree la base si
+                    // encuentra una versión anterior en el dispositivo.
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

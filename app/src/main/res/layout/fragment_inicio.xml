@@ -25,9 +25,6 @@
             <include layout="@layout/item_how_it_works"
                 android:id="@+id/how3"
                 android:layout_marginTop="12dp" />
-            <include layout="@layout/item_how_it_works"
-                android:id="@+id/how4"
-                android:layout_marginTop="12dp" />
         </LinearLayout>
 
         <LinearLayout

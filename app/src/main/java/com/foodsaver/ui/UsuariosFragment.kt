@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.foodsaver.MainActivity
 import com.foodsaver.R
 import com.foodsaver.data.AppDatabase
 import com.foodsaver.data.User
+import com.foodsaver.util.Validators
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
@@ -68,15 +68,27 @@ class UsuariosFragment : Fragment(R.layout.fragment_usuarios) {
             val direccion = etDireccion.text?.toString()?.trim().orEmpty()
             val telefono = etTelefono.text?.toString()?.trim().orEmpty()
 
-            // ── Validación: ningún campo puede estar vacío ──
+            // ── Validación: formato de cada campo, ninguno puede estar vacío ──
             var valido = true
-            if (nombre.isEmpty()) { tilNombre.error = "Este campo es obligatorio"; valido = false }
-            if (apellidos.isEmpty()) { tilApellidos.error = "Este campo es obligatorio"; valido = false }
-            if (direccion.isEmpty()) { tilDireccion.error = "Este campo es obligatorio"; valido = false }
-            if (telefono.isEmpty()) { tilTelefono.error = "Este campo es obligatorio"; valido = false }
+            if (!Validators.esNombreValido(nombre)) {
+                tilNombre.error = if (nombre.isEmpty()) "Este campo es obligatorio" else "Solo letras y espacios"
+                valido = false
+            }
+            if (!Validators.esNombreValido(apellidos)) {
+                tilApellidos.error = if (apellidos.isEmpty()) "Este campo es obligatorio" else "Solo letras y espacios"
+                valido = false
+            }
+            if (!Validators.esDireccionValida(direccion)) {
+                tilDireccion.error = if (direccion.isEmpty()) "Este campo es obligatorio" else "Escribe una dirección más completa"
+                valido = false
+            }
+            if (!Validators.esTelefonoValido(telefono)) {
+                tilTelefono.error = if (telefono.isEmpty()) "Este campo es obligatorio" else "Solo dígitos (7 a 15)"
+                valido = false
+            }
 
             if (!valido) {
-                android.widget.Toast.makeText(requireContext(), "⚠️ Ningún campo puede estar vacío.", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(requireContext(), "⚠️ Revisa los campos marcados en rojo.", android.widget.Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -102,11 +114,6 @@ class UsuariosFragment : Fragment(R.layout.fragment_usuarios) {
                 successBanner.postDelayed({
                     if (isAdded) successBanner.visibility = View.GONE
                 }, 3000)
-
-                (activity as? MainActivity)?.let { main ->
-                    val total = userDao.contar()
-                    main.refrescarContadorUsuarios(total)
-                }
             }
         }
 
@@ -121,7 +128,6 @@ class UsuariosFragment : Fragment(R.layout.fragment_usuarios) {
                     tvContador.visibility = View.VISIBLE
                     tvContador.text = "${usuarios.size} usuario${if (usuarios.size != 1) "s" else ""} registrado${if (usuarios.size != 1) "s" else ""}"
                 }
-                (activity as? MainActivity)?.refrescarContadorUsuarios(usuarios.size)
             }
         }
     }

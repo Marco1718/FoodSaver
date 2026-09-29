@@ -75,14 +75,9 @@
                 <TextView android:id="@+id/tvStatAlimentos" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/white" android:fontFamily="serif" android:textStyle="bold" android:textSize="22sp" />
             </LinearLayout>
 
-            <LinearLayout android:id="@+id/chipUrgentes" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginHorizontal="5dp" android:orientation="vertical" android:background="@drawable/bg_stat_chip" android:padding="9dp">
+            <LinearLayout android:id="@+id/chipUrgentes" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="5dp" android:orientation="vertical" android:background="@drawable/bg_stat_chip" android:padding="9dp">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Urgentes" android:textColor="@color/white" android:alpha="0.85" android:textSize="10sp" />
                 <TextView android:id="@+id/tvStatUrgentes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/white" android:fontFamily="serif" android:textStyle="bold" android:textSize="22sp" />
-            </LinearLayout>
-
-            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="5dp" android:orientation="vertical" android:background="@drawable/bg_stat_chip" android:padding="9dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Usuarios" android:textColor="@color/white" android:alpha="0.85" android:textSize="10sp" />
-                <TextView android:id="@+id/tvStatUsuarios" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/white" android:fontFamily="serif" android:textStyle="bold" android:textSize="22sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -13,6 +13,7 @@ import com.foodsaver.ui.InicioFragment
 import com.foodsaver.ui.RecetasFragment
 import com.foodsaver.ui.UrgentesFragment
 import com.foodsaver.ui.UsuariosFragment
+import com.foodsaver.util.DialogUtils
 
 enum class Seccion(val titulo: String) {
     INICIO("FoodSaver"), AGREGAR("Agregar alimento"), DESPENSA("Mi despensa"),
@@ -26,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var statsRow: View
     private lateinit var tvStatAlimentos: TextView
     private lateinit var tvStatUrgentes: TextView
-    private lateinit var tvStatUsuarios: TextView
     private lateinit var chipUrgentes: View
 
     private var seccionActual: Seccion = Seccion.INICIO
@@ -46,13 +46,20 @@ class MainActivity : AppCompatActivity() {
         statsRow = findViewById(R.id.statsRow)
         tvStatAlimentos = findViewById(R.id.tvStatAlimentos)
         tvStatUrgentes = findViewById(R.id.tvStatUrgentes)
-        tvStatUsuarios = findViewById(R.id.tvStatUsuarios)
         chipUrgentes = findViewById(R.id.chipUrgentes)
 
         findViewById<TextView>(R.id.btnLogout).setOnClickListener {
-            AppSession.cerrarSesion()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            DialogUtils.confirmar(
+                this,
+                titulo = "¿Cerrar sesión?",
+                mensaje = "Tendrás que volver a iniciar sesión para entrar de nuevo.",
+                textoConfirmar = "Sí, salir"
+            ) {
+                AppSession.cerrarSesion()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
         }
 
         setupNavItem(R.id.navInicio, "🏠", "Inicio", Seccion.INICIO)
@@ -79,9 +86,9 @@ class MainActivity : AppCompatActivity() {
         container.setOnClickListener { mostrarSeccion(seccion) }
     }
 
-    private fun mostrarSeccion(seccion: Seccion) {
+    private fun mostrarSeccion(seccion: Seccion, fragmentOverride: Fragment? = null) {
         seccionActual = seccion
-        val fragment: Fragment = when (seccion) {
+        val fragment: Fragment = fragmentOverride ?: when (seccion) {
             Seccion.INICIO -> InicioFragment()
             Seccion.AGREGAR -> AgregarFragment()
             Seccion.DESPENSA -> DespensaFragment()
@@ -97,26 +104,38 @@ class MainActivity : AppCompatActivity() {
         actualizarNavActivo(seccion)
     }
 
-    /** Llamado por los fragments cuando cambian datos (alimentos/usuarios) para refrescar los contadores del header. */
+    /** Abre el formulario de "Agregar alimento" ya en modo edición, precargado con ese alimento. */
+    fun editarAlimento(alimentoId: Int) {
+        mostrarSeccion(Seccion.AGREGAR, AgregarFragment.paraEditar(alimentoId))
+    }
+
+    /** Tras guardar una edición (Update), regresa a Despensa para ver el cambio reflejado. */
+    fun volverADespensaSiEditando(idEnEdicion: Int?) {
+        if (idEnEdicion != null) mostrarSeccion(Seccion.DESPENSA)
+    }
+
+    /** Título/saludo del header. Los NÚMEROS (alimentos/urgentes) los actualiza
+     *  InicioFragment vía actualizarStatsInicio() cuando observa Room, ya que
+     *  ahora viven en la base de datos (consulta asíncrona), no en memoria. */
     fun actualizarHeader() {
         tvSectionTitle.text = seccionActual.titulo
         if (seccionActual == Seccion.INICIO) {
             tvGreeting.visibility = View.VISIBLE
             tvGreeting.text = "Hola, ${AppSession.currentUser?.nombre?.split(" ")?.firstOrNull() ?: ""} 👋"
             statsRow.visibility = View.VISIBLE
-            tvStatAlimentos.text = AppSession.alimentos.size.toString()
-            tvStatUrgentes.text = AppSession.soloUrgentes().size.toString()
-            chipUrgentes.setBackgroundResource(
-                if (AppSession.soloUrgentes().isNotEmpty()) R.drawable.bg_stat_chip_alert else R.drawable.bg_stat_chip
-            )
         } else {
             tvGreeting.visibility = View.GONE
             statsRow.visibility = View.GONE
         }
     }
 
-    fun refrescarContadorUsuarios(total: Int) {
-        tvStatUsuarios.text = total.toString()
+    /** Llamado por InicioFragment cada vez que Room emite la lista de alimentos del usuario actual. */
+    fun actualizarStatsInicio(total: Int, urgentes: Int) {
+        tvStatAlimentos.text = total.toString()
+        tvStatUrgentes.text = urgentes.toString()
+        chipUrgentes.setBackgroundResource(
+            if (urgentes > 0) R.drawable.bg_stat_chip_alert else R.drawable.bg_stat_chip
+        )
     }
 
     private fun actualizarNavActivo(seccion: Seccion) {

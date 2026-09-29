@@ -1,7 +1,18 @@
 package com.foodsaver.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+/**
+ * Entidad Room de un alimento. "ownerEmail" es el correo de la cuenta
+ * (AuthUser) dueña del registro: así cada usuario solo ve y modifica sus
+ * propios alimentos, aunque estén en la misma tabla/base de datos.
+ */
+@Entity(tableName = "alimentos")
 data class Alimento(
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val ownerEmail: String,
     val nombre: String,
     val categoria: String,
     val cantidad: Int,
@@ -23,24 +34,24 @@ fun estadoDe(dias: Int): Estado = when {
 }
 
 /**
- * Estado compartido de la app en memoria (equivalente a los useState del
- * componente App.tsx original). No usa Room porque, igual que en el
- * prototipo, los alimentos y la sesión no son parte del requisito de
- * persistencia: solo la entidad User se guarda en la base de datos local.
+ * Estado de sesión en memoria (login actual + cuentas registradas). Las
+ * cuentas (AuthUser) siguen en memoria, como antes; lo que cambió es que
+ * los ALIMENTOS de cada cuenta ahora viven en Room (tabla "alimentos"),
+ * filtrados por el correo de quien inició sesión — ver AlimentoDao.
  */
 object AppSession {
     var currentUser: AuthUser? = null
     val authUsers = mutableListOf<AuthUser>()
 
-    var nextFoodId = 1
-    val alimentos = mutableListOf<Alimento>()
-
     val CATEGORIAS = listOf("Lácteos", "Frutas", "Verduras", "Carnes", "Granos", "Otros")
 
-    fun urgentes(): List<Alimento> = alimentos.filter { it.dias <= 5 }
-    fun soloUrgentes(): List<Alimento> = alimentos.filter { it.dias <= 2 }
+    /** Alimentos con 5 días o menos, ordenados: el más urgente (menos días) primero. */
+    fun urgentes(alimentos: List<Alimento>): List<Alimento> =
+        alimentos.filter { it.dias <= 5 }.sortedBy { it.dias }
 
-    fun recetasSugeridas(): List<Triple<String, String, String>> {
+    fun soloUrgentes(alimentos: List<Alimento>): List<Alimento> = alimentos.filter { it.dias <= 2 }
+
+    fun recetasSugeridas(alimentos: List<Alimento>): List<Triple<String, String, String>> {
         val nombres = alimentos.map { it.nombre.lowercase() }
         val out = mutableListOf<Triple<String, String, String>>()
         if (nombres.contains("leche") && nombres.contains("tomate"))
